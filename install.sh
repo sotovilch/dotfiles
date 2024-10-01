@@ -102,7 +102,7 @@ install_dotfiles() {
 
 	local overwrite_all=false backup_all=false skip_all=false
 
-	find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'links.prop' -not -path '*.git*' | while read linkfile; do
+	find -H "$DOTFILES_ROOT" -maxdepth 4 -name 'links.prop' -not -path '*.git*' | while read linkfile; do
 		cat "$linkfile" | while read line; do
 			if [ "$line" != "" ]; then
 				local src dst dir
