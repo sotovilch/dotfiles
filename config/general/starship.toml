@@ -1,0 +1,180 @@
+format = """
+[](#3B4252)\
+$python\
+$username\
+$hostname\
+[](bg:#434C5E fg:#3B4252)\
+$directory\
+[](fg:#434C5E bg:#4C566A)\
+$git_branch\
+$git_status\
+[](fg:#4C566A bg:#522403)\
+$c\
+$elixir\
+$elm\
+$golang\
+$haskell\
+$java\
+$julia\
+$nodejs\
+$nim\
+$rust\
+[](fg:#522403 bg:#06969A)\
+$docker_context\
+[](fg:#06969A bg:#33658A)\
+$time\
+[ ](fg:#33658A)
+$character
+"""
+add_newline = true
+
+[username]
+style_user = "bg:#3B4252"
+style_root = "bg:#3B4252"
+format = "[$user ]($style)"
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format = "[on ](bg:#3B4252)[$hostname ](bg:#3B4252 fg:#06969A bold)"
+trim_at = "."
+disabled = false
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]                            # The name of the module we are configuring is "character"
+success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[✗](bold red)"
+
+# configure directory
+[directory]
+style = "bold italic bg:#434C5E"
+format = "[ $path ]($style)"
+read_only = "󰌾 "
+truncation_length = 10
+truncate_to_repo = true # truncates directory to root folder if in github repo
+
+[cmd_duration]
+min_time = 4
+show_milliseconds = false
+disabled = false
+style = "bold italic red"
+
+[aws]
+symbol = "  "
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+format = "[via $symbol $context ]($style)"
+style = "bg:#06969A fg:black"
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+detect_folders = []
+disabled = false
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[git_branch]
+symbol = " "
+format = "[ on ](bg:#4C566A)[$symbol$branch(:$remote_branch) ](bg:#4C566A bold purple)"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\] ](bg:#4C566A $style))'
+stashed = "[${count}*](bg:#4C566A green)" 
+modified = "[${count}+](bg:#4C566A yellow)" 
+deleted =  "[${count}-](bg:#4C566A red)" 
+conflicted =  "[${count}~](bg:#4C566A red)" 
+ahead = "⇡${count}(bg:#4C566A)"
+behind = "⇣${count}(bg:#4C566A)"
+untracked = "[${count}?](bg:#4C566A bold purple)" 
+staged = "[${count}+](bg:#4C566A green)" 
+
+[git_state]
+style =	"bold red"
+format = "[$state( $progress_current/$progress_total) ]($style)"
+rebase = "rebase"
+merge = "merge"	
+revert = "revert"	
+cherry_pick = "cherry"
+bisect = "bisect"	
+am = "am"	
+am_or_rebase = "am/rebase"
+
+[golang]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[haskell]
+symbol = "λ "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[nim]
+symbol = "󱇐 "
+
+[nix_shell]
+symbol = " "
+
+[package]
+symbol = "󰏗 "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+symbol = "󰌠 "
+format = '[ via ](bg:#3B4252)[${symbol}python (${version} )(\($virtualenv\) )]($style)'
+style = "bg:#3B4252 bold yellow"
+pyenv_prefix = "venv "
+python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+detect_extensions = ["py"]
+version_format = "v${raw}"
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[shlvl]
+symbol = " "
+
+[swift]
+symbol = "ﯣ "
+
+[nodejs]
+format = "[ via ]($style)[ 󰎙 Node.js $version ]($style bold)"
+style = "bg:#522403 fg:white"
+detect_files = ["package.json", ".node-version"]
+detect_folders = ["node_modules"]
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#33658A"
+format = '[ $time ]($style)'
