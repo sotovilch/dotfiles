@@ -25,7 +25,6 @@
 # SOFTWARE.
 
 from libqtile import qtile
-from libqtile.core.manager import Qtile
 from libqtile.config import Click, Drag, Key
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -35,6 +34,7 @@ from settings.wayland import init_wayland_input_rules
 from settings.groups import init_groups
 from settings.screens import init_screens
 from utils.connected_monitors import get_connected_monitors
+from utils.lazy_functions import go_to_group, move_to_group
 
 GROUPS_PER_MONITOR = ["uiop", "7890", "1234"]
 
@@ -119,27 +119,6 @@ for vt in range(1, 8):
 connected_monitors = get_connected_monitors(max_monitors=len(GROUPS_PER_MONITOR))
 
 groups = init_groups(connected_monitors, GROUPS_PER_MONITOR)
-
-
-@lazy.function
-def go_to_group(qtile: Qtile, name_group: str, index_screen: int):
-    if qtile.current_screen.index != index_screen:
-        qtile.focus_screen(index_screen)
-
-    if qtile.current_group.name != name_group:
-        qtile.groups_map[name_group].toscreen()
-
-
-@lazy.function
-def move_to_group(qtile: Qtile, name_group: str, index_screen: int):
-    if qtile.current_window is not None:
-        qtile.current_window.togroup(name_group)
-
-    if qtile.current_screen.index != index_screen:
-        qtile.focus_screen(index_screen)
-    else:
-        qtile.groups_map[name_group].toscreen()
-
 
 for i in groups:
     keys.extend(
