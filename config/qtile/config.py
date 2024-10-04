@@ -25,7 +25,7 @@
 # SOFTWARE.
 
 from libqtile import qtile
-from libqtile.config import Click, Drag, Key
+from libqtile.config import Key
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
@@ -34,6 +34,7 @@ from settings.wayland import init_wayland_input_rules
 from settings.groups import init_groups
 from settings.screens import init_screens
 from settings.keys import init_key_bindings
+from settings.mouse import init_mouse_shortcuts
 from utils.connected_monitors import get_connected_monitors
 from utils.lazy_functions import go_to_group, move_to_group
 
@@ -84,19 +85,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = init_screens(connected_monitors, GROUPS_PER_MONITOR)
 
-# Drag floating layouts.
-mouse = [
-    Drag(
-        [mod],
-        "Button1",
-        lazy.window.set_position_floating(),
-        start=lazy.window.get_position(),
-    ),
-    Drag(
-        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
-    ),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
-]
+mouse = init_mouse_shortcuts(mod)
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
