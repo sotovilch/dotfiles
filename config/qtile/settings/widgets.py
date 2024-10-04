@@ -40,14 +40,14 @@ class CapsNumLockIndicator(widget.CapsNumLockIndicator):
 def init_primary_widgets(groups: str):
     return [
         widget.GroupBox(visible_groups=[i for i in groups]),
-        widget.Prompt(),
-        widget.WindowName(),
+        CapsNumLockIndicator(**widget_icon_defaults),
         widget.Chord(
             chords_colors={
                 "launch": ("#ff0000", "#ffffff"),
             },
             name_transform=lambda name: name.upper(),
         ),
+        widget.Spacer(),
         widget.TextBox(
             " ", background="#000000", foreground="#5e81ac", **widget_icon_defaults
         ),
@@ -57,7 +57,6 @@ def init_primary_widgets(groups: str):
         widget.Clock(
             format="%Y-%m-%d %a %H:%M", background="#5e81ac", foreground="#ffffff"
         ),
-        CapsNumLockIndicator(**widget_icon_defaults),
         widget.QuickExit(),
     ]
 
