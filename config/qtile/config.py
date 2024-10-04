@@ -25,8 +25,6 @@
 # SOFTWARE.
 
 from libqtile import qtile
-from libqtile.config import Key
-from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 from settings.layout import init_layouts, init_floating_layout
@@ -36,7 +34,6 @@ from settings.screens import init_screens
 from settings.keys import init_key_bindings
 from settings.mouse import init_mouse_shortcuts
 from utils.connected_monitors import get_connected_monitors
-from utils.lazy_functions import go_to_group, move_to_group
 
 GROUPS_PER_MONITOR = ["uiop", "7890", "1234"]
 
@@ -45,34 +42,11 @@ GROUPS_PER_MONITOR = ["uiop", "7890", "1234"]
 mod = "lock"
 terminal = guess_terminal()
 
-keys = [
-    *init_key_bindings(mod),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-]
-
 connected_monitors = get_connected_monitors(max_monitors=len(GROUPS_PER_MONITOR))
 
 groups = init_groups(connected_monitors, GROUPS_PER_MONITOR)
 
-for i in groups:
-    keys.extend(
-        [
-            # mod + group number = switch to group
-            Key(
-                [mod],
-                i.name,
-                go_to_group(i.name, i.screen_affinity),
-                desc="Switch to group {}".format(i.name),
-            ),
-            # mod + shift + group number = switch to & move focused window to group
-            Key(
-                [mod, "shift"],
-                i.name,
-                move_to_group(i.name, i.screen_affinity),
-                desc="Switch to & move focused window to group {}".format(i.name),
-            ),
-        ]
-    )
+keys = init_key_bindings(mod, connected_monitors, GROUPS_PER_MONITOR)
 
 layouts = init_layouts(4, "#5e81ac", "#4c566a")
 

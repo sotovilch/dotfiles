@@ -2,6 +2,8 @@ from libqtile import qtile
 from libqtile.config import Key, KeyChord
 from libqtile.lazy import lazy
 
+from utils.lazy_functions import go_to_group, move_to_group
+
 
 def __init_key_bindings_to_monad_tall(mod_key):
     return [
@@ -79,6 +81,37 @@ def __init_key_bindings_to_switch_vts_in_wayland():
     return keys
 
 
+def __init_key_bindings_to_groups_in_qtile(
+    mod_key, connected_monitors: int, groups_per_monitor: list[str]
+):
+    keys = []
+
+    for index_screen in range(connected_monitors):
+        for group_name in groups_per_monitor[index_screen]:
+            keys.extend(
+                [
+                    # mod + group number = switch to group
+                    Key(
+                        [mod_key],
+                        group_name,
+                        go_to_group(group_name, index_screen),
+                        desc="Switch to group {}".format(group_name),
+                    ),
+                    # mod + shift + group number = switch to & move focused window to group
+                    Key(
+                        [mod_key, "shift"],
+                        group_name,
+                        move_to_group(group_name, index_screen),
+                        desc="Switch to & move focused window to group {}".format(
+                            group_name
+                        ),
+                    ),
+                ]
+            )
+
+    return keys
+
+
 def __init_key_bindings_to_apps(mod_key):
     return [
         KeyChord(
@@ -103,9 +136,12 @@ def __init_key_bindings_to_apps(mod_key):
     ]
 
 
-def init_key_bindings(mod_key):
+def init_key_bindings(mod_key, connected_monitors: int, groups_per_monitor: list[str]):
     return [
         *__init_key_bindings_to_monad_tall(mod_key),
         *__init_key_bindings_to_switch_vts_in_wayland(),
+        *__init_key_bindings_to_groups_in_qtile(
+            mod_key, connected_monitors, groups_per_monitor
+        ),
         *__init_key_bindings_to_apps(mod_key),
     ]
