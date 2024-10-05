@@ -24,7 +24,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from libqtile import qtile
+import os
+import subprocess
+
+from libqtile import qtile, hook
 from libqtile.utils import guess_terminal
 
 from settings.layout import init_layouts, init_floating_layout
@@ -92,3 +95,9 @@ wl_xcursor_size = 24
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
+
+@hook.subscribe.startup_once
+def autostart():
+    script = os.path.expanduser("~/.config/qtile/autostart.sh")
+    subprocess.run([script])
