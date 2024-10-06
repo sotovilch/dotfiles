@@ -49,7 +49,19 @@ def init_primary_widgets(groups: str):
         ),
         widget.Spacer(),
         widget.TextBox(
-            " ", background="#000000", foreground="#5e81ac", **widget_icon_defaults
+            " ", background="#000000", foreground="#4c566a", **widget_icon_defaults
+        ),
+        widget.TextBox(
+            "  ", background="#4c566a", foreground="#ffffff", **widget_icon_defaults
+        ),
+        widget.Memory(
+            format="{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
+            measure_mem="M",
+            background="#4c566a",
+            foreground="#ffffff",
+        ),
+        widget.TextBox(
+            " ", background="#4c566a", foreground="#5e81ac", **widget_icon_defaults
         ),
         widget.TextBox(
             " 󰃰 ", background="#5e81ac", foreground="#ffffff", **widget_icon_defaults
