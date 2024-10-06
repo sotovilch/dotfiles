@@ -9,6 +9,17 @@ widget_icon_defaults = {
     "fontsize": 20,
 }
 
+widget_volume_defaults = {
+    "mute_command": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "volume_down_command": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+    "volume_up_command": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "get_volume_command": "pactl get-sink-volume @DEFAULT_SINK@ | grep 'Volume' | awk -F '/' '{print $2}'",
+    "check_mute_command": "pactl list sinks | grep 'Mute' | awk '{print $2}'",
+    "check_mute_string": "yes",
+    "background": "#000000",
+    "foreground": "#ffffff",
+}
+
 
 class CapsNumLockIndicator(widget.CapsNumLockIndicator):
     def __init__(self, **config):
@@ -69,6 +80,16 @@ def init_primary_widgets(groups: str):
         widget.Clock(
             format="%Y-%m-%d %a %H:%M", background="#5e81ac", foreground="#ffffff"
         ),
+        widget.TextBox(
+            " ", background="#5e81ac", foreground="#000000", **widget_icon_defaults
+        ),
+        widget.Volume(
+            emoji="True",
+            emoji_list=["  ", "  ", "  ", "  "],
+            fontsize=14,
+            **widget_volume_defaults,
+        ),
+        widget.Volume(**widget_volume_defaults),
         widget.QuickExit(),
     ]
 
