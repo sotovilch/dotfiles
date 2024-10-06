@@ -136,6 +136,26 @@ def __init_key_bindings_to_apps(mod_key):
     ]
 
 
+def __init_key_bindings_hardware(mod_key):
+    return [
+        Key(
+            [],
+            "XF86AudioMute",
+            lazy.widget["volume"].mute(),
+        ),
+        Key(
+            [],
+            "XF86AudioLowerVolume",
+            lazy.widget["volume"].decrease_vol(),
+        ),
+        Key(
+            [],
+            "XF86AudioRaiseVolume",
+            lazy.widget["volume"].increase_vol(),
+        ),
+    ]
+
+
 def init_key_bindings(mod_key, connected_monitors: int, groups_per_monitor: list[str]):
     return [
         *__init_key_bindings_to_monad_tall(mod_key),
@@ -144,4 +164,5 @@ def init_key_bindings(mod_key, connected_monitors: int, groups_per_monitor: list
             mod_key, connected_monitors, groups_per_monitor
         ),
         *__init_key_bindings_to_apps(mod_key),
+        *__init_key_bindings_hardware(mod_key),
     ]
