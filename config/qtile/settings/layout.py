@@ -24,6 +24,7 @@ def init_layouts(border_width: int, border_focus: str, border_normal: str):
             border_width=border_width,
             border_focus=border_focus,
             border_normal=border_normal,
+            margin=8,
         )
     ]
 

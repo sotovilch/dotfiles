@@ -5,7 +5,7 @@ from typing import Literal
 from libqtile import widget
 
 widget_icon_defaults = {
-    "padding": 1,
+    "padding": 0,
     "fontsize": 20,
 }
 
@@ -18,6 +18,18 @@ widget_volume_defaults = {
     "check_mute_string": "yes",
     "background": "#000000",
     "foreground": "#ffffff",
+}
+
+widget_group_box_defaults = {
+    "fmt": "<b>{}</b>",
+    "markup": True,
+    "foreground": "#ffffff",
+    "inactive": "#4c566a",
+    "highlight_method": "line",
+    "active": "#ffffff",
+    "this_current_screen_border": "#ffffff",
+    "this_screen_border": "#ffffff",
+    "padding": 6,
 }
 
 
@@ -50,12 +62,14 @@ class CapsNumLockIndicator(widget.CapsNumLockIndicator):
 
 def init_primary_widgets(groups: str):
     return [
-        widget.GroupBox(visible_groups=[i for i in groups]),
+        widget.TextBox("  ", foreground="#ffffff", **widget_icon_defaults),
+        widget.Sep(linewidth=1, padding=10, foreground="#ffffff"),
+        widget.GroupBox(
+            visible_groups=[i for i in groups], **widget_group_box_defaults
+        ),
+        widget.Sep(linewidth=1, padding=10, foreground="#ffffff"),
         CapsNumLockIndicator(**widget_icon_defaults),
         widget.Chord(
-            chords_colors={
-                "launch": ("#ff0000", "#ffffff"),
-            },
             name_transform=lambda name: name.upper(),
         ),
         widget.Spacer(),
@@ -96,7 +110,12 @@ def init_primary_widgets(groups: str):
 
 def init_secondary_widgets(groups: str):
     return [
-        widget.GroupBox(visible_groups=[i for i in groups]),
+        widget.TextBox("  ", foreground="#ffffff", **widget_icon_defaults),
+        widget.Sep(linewidth=1, padding=10, foreground="#ffffff"),
+        widget.GroupBox(
+            visible_groups=[i for i in groups],
+            **widget_group_box_defaults,
+        ),
         widget.Spacer(),
         widget.TextBox(
             " ", background="#000000", foreground="#5e81ac", **widget_icon_defaults
