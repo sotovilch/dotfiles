@@ -137,6 +137,9 @@ def __init_key_bindings_to_apps(mod_key):
 
 
 def __init_key_bindings_hardware(mod_key):
+    cmd_brightness_up = "xbacklight -inc 10"
+    cmd_brightness_down = "xbacklight -dec 10"
+
     return [
         Key(
             [],
@@ -152,6 +155,26 @@ def __init_key_bindings_hardware(mod_key):
             [],
             "XF86AudioRaiseVolume",
             lazy.widget["volume"].increase_vol(),
+        ),
+        Key(
+            [],
+            "XF86MonBrightnessDown",
+            lazy.spawn(cmd_brightness_down),
+        ),
+        Key(
+            [],
+            "XF86MonBrightnessUp",
+            lazy.spawn(cmd_brightness_up),
+        ),
+        Key(
+            [mod_key],
+            "XF86AudioRaiseVolume",
+            lazy.spawn(cmd_brightness_up),
+        ),
+        Key(
+            [mod_key],
+            "XF86AudioLowerVolume",
+            lazy.spawn(cmd_brightness_down)
         ),
     ]
 
