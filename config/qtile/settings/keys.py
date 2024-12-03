@@ -130,6 +130,11 @@ def __init_key_bindings_to_apps(mod_key):
                     ],
                     name="Qtile opt.",
                 ),
+                Key(
+                    [],
+                    "r",
+                    lazy.spawn("rofi -show drun"),
+                ),
             ],
             name="Apps",
         )
