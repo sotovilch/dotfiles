@@ -99,5 +99,8 @@ wmname = "LG3D"
 
 @hook.subscribe.startup_once
 def autostart():
-    script = os.path.expanduser("~/.config/qtile/autostart.sh")
+    if qtile.core.name == "wayland":
+        script = os.path.expanduser("~/.config/qtile/autostart-wayland.sh")
+    else:
+        script = os.path.expanduser("~/.config/qtile/autostart-x11.sh")
     subprocess.run([script])
